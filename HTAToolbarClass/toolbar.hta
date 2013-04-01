@@ -1,0 +1,134 @@
+<html>
+	<head>
+		<title>HTA Toolbar Class</title>
+		<hta:application id="hta" applicationname="hta_toolbar_class" border="thick" borderstyle="static" caption="HTA Toolbar Class" contextmenu="no" icon="icon.ico" scroll="no" singleinstance="yes">
+		<script type="text/javascript" src="toolbar.js"></script>
+		<link type="text/css" rel="stylesheet" href="toolbar.css" />
+		<script type="text/javascript">
+		function CopyCode(objCode)
+		{
+			var copyField = document.getElementById("copy_field");
+			copyField.value = objCode.innerHTML.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+			copyField.createTextRange().execCommand("Copy");
+			UpdateStatus("The code has been copied to the clipboard.", "alert.png", 2000);
+		}
+		var Menus =
+		[
+			[
+				"mnuApp",
+				"Application",
+				[
+					["Hide Menu Bar...", "toolbar.menu.hide(); toolbar.status.update('To show the menu bar again, press F5.', 'alert.png', 2000);"],
+					["Toggle Status Bar", "if (toolbar.status.use) { toolbar.status.hide(); } else { toolbar.status.show(); }"],
+					"-",
+					["Exit Application...", "if (confirm('Are you sure you want to quit?')) { window.close(); }"]
+				]
+			],
+			[
+				"btnRefresh",
+				"Refresh",
+				"history.go(0);"
+			],
+			[
+				"mnuHelp",
+				"Help",
+				[
+					["Written by Ollie Terrance<br />From Twilip's 'HTA MenuBar'"],
+					"-",
+					["http://terrance.x10.mx", "toolbar.status.update('Loading Internet Explorer...', 'alert.png', 200); setTimeout('window.open(\\'http://terrance.x10.mx/\\');', 100);"]
+				]
+			]
+		];
+		var Status = ["This is the HTA Toolbar Class.", "right.png"];
+		</script>
+		<style type="text/css">
+		#content
+		{
+			background-color: #46F;
+			color: white;
+			padding: 15px 15px 0;
+		}
+		#content *
+		{
+			margin-top: 5px;
+		}
+		#content pre
+		{
+			border: 1px dashed white;
+			font-family: Consolas, "Lucida Console", monospace;
+			font-size: 11px;
+			margin-bottom: 0;
+			padding: 2px;
+			word-wrap: break-word;
+		}
+		#content pre b
+		{
+			font-size: 11px;
+		}
+		</style>
+	</head>
+	<body onload="toolbar.init(600, 400, Menus, Status, 1);">
+		<div id="content">
+			<p>
+				<u>Introduction</u>
+				<div>This HTA Toolbar class allows you to easily add a menu and/or status bar into your HTML applications.  The menu bar supports multiple menus, menu buttons, separators and disabled items.  The status bar supports icons, expiry times and temporary statuses.</div>
+				<div><b>Tip:</b> in this guide, you can double-click on code snippets to copy them to the clipboard.</div>
+			</p>
+			<p>
+				<u>Starting Off</u>
+				<div>To use the class, you need a copy of the <b>toolbar.css</b> and <b>toolbar.js</b> in a folder with a new HTA file.  The HTA should be structured like this.</div>
+				<pre ondblclick="CopyCode(this);">&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;<b>title</b>&lt;/title&gt;
+        &lt;hta:application id="<b>ID</b>" applicationname="<b>name</b>" border="thick" borderstyle="static" caption="<b>title</b>" contextmenu="no" icon="<b>icon</b>" scroll="no" singleinstance="yes"&gt;
+        &lt;script type="text/javascript" src="toolbar.js"&gt;&lt;/script&gt;
+        &lt;link type="text/css" rel="stylesheet" href="toolbar.css" /&gt;
+    &lt;/head&gt;
+	&lt;body onload="toolbar.init(<b>width</b>, <b>height</b>[, <b>menus</b>[, <b>status</b> [, <b>error</b>]]]);"&gt;
+        &lt;div id="content"&gt;<b>content</b>&lt;/div&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</pre>
+				<div>The <b>InitToolbar()</b> function is how you define toolbars.  It takes up to five parameters: <i>width</i>, <i>height</i>, <i>menus</i>, <i>status</i> and <i>error</i>.  The width and height parameters allow you to set the window size before you define menus.  The menus parameter takes a menu array (or false if you don't want a menu bar), and the status parameter takes a string and image array (or false if you don't want a status bar).  By setting error to 1 (or any truthy value), any errors that occur whilst running core toolbar functions will be displayed in alert dialogs (useful for debugging errors).</div>
+			</p>
+			<p>
+				<u>Menu Bars</u>
+				<div>You should define your menu as a nested array in the <b>head</b> section of the page.  The basic layout is as follows.</div>
+				<pre ondblclick="CopyCode(this);">var Menus =
+[
+    [
+        "<b>menu 1 ID</b>",
+        "<b>menu 1 label</b>",
+        [
+            ["<b>menu 1, item 1 Label</b>", "<b>menu 1, item 1 script</b>"],
+            ["<b>menu 1, disabled item 2 Label</b>"],
+            "-",
+            ["<b>menu 1, item 3 Label</b>", "<b>menu 1, item 3 script</b>"]
+        ]
+    ],
+    [
+        "<b>button 2 ID</b>",
+        "<b>button 2 label</b>",
+        "<b>button 2 script</b>"
+    ],
+    [
+        "<b>menu 3 ID</b>",
+        "<b>menu 3 label</b>",
+        [
+            ["<b>menu 3, item 1 label</b>", "<b>menu 3, item 1 script</b>"]
+        ]
+    ]
+];</pre>
+				<div>Each menu is an array within an array.  A sub-menu array is divided into three - an ID, a label, and a menu sub-array (or script if you want a menu button instead.  This sub array then takes additional arrays for each menu item, which has a label and a script (a separator can be added by passing "-" instead of a sub-array).  To disable a menu item, omit the script string (just use a label within a sub-array).</div>
+				<div>When calling the <b>InitToolbar()</b> function, pass the Menus array (or whatever you called it) as the third parameter.</div>
+			</p>
+			<p>
+				<u>Status Bars</u>
+				<div>You should define your menu as either a string or an array (depending on if you want an icon or not) in the <b>head</b> section of the page.</div>
+				<pre ondblclick="CopyCode(this);">var Status = "This is a standard status message.";</pre>
+				<pre ondblclick="CopyCode(this);">var Status = ["This status message has an alert icon.", "alert.png"];</pre>
+				<div>The icon should be relative to the HTA directory, and should be 16px by 16px (larger images will be resized).  When calling the <b>InitToolbar()</b> function, pass the Status string or array as the fourth parameter.</div>
+			</p>
+			<textarea id="copy_field" style="display: none;"></textarea>
+		</div>
+	</body>
+</html>

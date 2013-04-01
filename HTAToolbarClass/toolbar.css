@@ -1,0 +1,130 @@
+/* content styles */
+
+*
+{
+	cursor: default;
+	font-family: "Segoe UI", Calibri, "Trebuchet MS", Verdana, Tahoma, sans-serif;
+	font-size: 12px;
+}
+
+body
+{
+	height: 100%;
+	margin: 0;
+}
+
+#content
+{
+	bottom: 0;
+	height: 100%;
+	overflow: auto;
+	z-index: -1;
+}
+
+/* menu bar styles */
+
+#menu_bar
+{
+	background-color: #F0F0F0;
+	border-bottom: 1px solid #AEAEAE;
+	color: black;
+	padding: 5px;
+	padding-left: 1px;
+}
+
+.menu_root
+{
+	border: 1px solid #F0F0F0;
+	padding: 3px;
+}
+
+.menu_root_hover
+{
+	background-color: #D5DBEA;
+	border: 1px solid #8999C5;
+	padding: 3px;
+}
+
+.menu_root_selected
+{
+	background-color: #5B72AC;
+	border: 1px solid #415381;
+	color: #FFFFFF;
+	padding: 3px;
+	text-decoration: none;
+}
+
+.menu_root_space
+{
+	width: 3px;
+}
+
+.menu_popup
+{
+	background-color: #F0F0F0;
+	border: 1px solid #AEAEAE;
+	left: 100px;
+	padding: 1px;
+	position: absolute;
+	top: 100px;
+}
+
+.menu_item
+{
+	border: 1px solid #F0F0F0;
+	display: block;
+	padding: 4px;
+	text-decoration: none;
+}
+
+.menu_item_hover
+{
+	background-color: #D5DBEA;
+	border: 1px solid #8999C5;
+	display: block;
+	padding: 4px;
+	text-decoration: none;
+}
+
+.menu_item_disabled
+{
+	border: 1px solid #F0F0F0;
+	color: #606060;
+	display: block;
+	padding: 4px;
+	text-decoration: none;
+}
+
+.menu_sep
+{
+	border-top: 1px solid #DFDFDF;
+	color: #000000;
+	cursor: default;
+	display: block;
+	font-size: 1px;
+	margin-top: 2px;
+	text-decoration: none;
+}
+
+/* status bar styles */
+
+#status_bar
+{
+	background-color: #F0F0F0;
+	border-top: 1px solid #AEAEAE;
+	bottom: 0;
+	color: black;
+	height: 21px;
+	overflow: hidden;
+	padding: 2px 5px;
+	position: absolute;
+	width: 100%;
+}
+
+.status_icon
+{
+	float: left;
+	height: 16px;
+	margin-right: 5px;
+	width: 16px;
+}
